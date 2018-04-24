@@ -1,15 +1,30 @@
-# spider
-Base on Python
+# Coursera Spider
+Base on Python scrapy
 
-How to run
+##How to run
 
 ---
+###Clone this repo
+```
+git clone https://github.com/hahanigehaha233/courseraSpider
+```
 
-- python -m venv
+###Create vritual env
+```
+cd courseraSpider
+python -m venv
+source /venv/bin/activate
+pip install -r requirements.txt
+```
+###Init DataBase
+Make sure you already have MySQL database
 
-- source /venv/bin/activate
+you can change the connection info in `/courseraSpider/config.py`
 
-- pip install -r requirements.txt
+
+```
+python initdb.py
+```
 
 
 
