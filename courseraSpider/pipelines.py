@@ -10,7 +10,7 @@ import pymysql
 
 class CourseraspiderPipeline(object):
     def __init__(self):
-        self.connect = pymysql.connect(host=config.MYSQL_HOST, port=3306, db=config.MYSQL_DBNAME, user=config.MYSQL_USER, passwd=config.MYSQL_PASSWD, charset='utf8', )
+        self.connect = pymysql.connect(host=config.MYSQL_HOST, port=3306, db=config.MYSQL_DBNAME, user=config.MYSQL_USER, passwd=config.MYSQL_PASSWD, charset='utf8', use_unicode=True)
         self.cursor = self.connect.cursor()
 
     def process_item(self, item, spider):
@@ -22,6 +22,6 @@ class CourseraspiderPipeline(object):
                  item['href']))
             self.connect.commit()
         except Exception as error:
-            print error
+            spider.log(error)
             pass
         return item
