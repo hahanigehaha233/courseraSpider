@@ -1,6 +1,6 @@
 import pymysql
-
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='1234', db='coursera', charset='utf8')
+import courseraSpider.config
+conn = pymysql.connect(host=courseraSpider.config.MYSQL_HOST, port=3306, user=courseraSpider.config.MYSQL_USER, passwd=courseraSpider.config.MYSQL_PASSWD, db=courseraSpider.config.MYSQL_DBNAME, charset='utf8')
 cursor = conn.cursor()
 
 sql1 = """create table coursera.project 
@@ -10,7 +10,9 @@ sql1 = """create table coursera.project
          project_key varchar(50),
          FOREIGN KEY (project_name) REFERENCES id(name),
          feedback_num varchar(10),
-         t_rank integer(1))"""
+         t_rank integer(1),
+         has_table tinyint(1),
+         has_subMenu tinyint(1))"""
 
 sql2 = """create table coursera.id
         (id int NOT NULL auto_increment,
@@ -19,8 +21,15 @@ sql2 = """create table coursera.id
         name varchar(500),
         UNIQUE (name))"""
 
+sql3 = """create table coursera.sub_href
+        (id int NOT NULL auto_increment,
+        PRIMARY KEY (id),
+        parent_href varchar(500),
+        child_href varchar(500))"""
+
 cursor.execute(sql1)
 cursor.execute(sql2)
+cursor.execute(sql3)
 conn.commit()
 cursor.close()
 conn.close()
