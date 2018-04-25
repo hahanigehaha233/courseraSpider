@@ -7,18 +7,17 @@ sql1 = """create table coursera.project
         (Id_P int NOT NULL auto_increment,
          PRIMARY KEY (Id_P),
          project_name varchar(500),
-         project_key varchar(50),
          FOREIGN KEY (project_name) REFERENCES id(name),
          feedback_num varchar(10),
-         t_rank integer(1),
-         has_table tinyint(1),
-         has_subMenu tinyint(1))"""
+         t_rank numeric(2,1),
+         has_table tinyint(1))"""
 
 sql2 = """create table coursera.id
         (id int NOT NULL auto_increment,
         PRIMARY KEY (id),
         href varchar(500),
         name varchar(500),
+        name_id varchar(50),
         UNIQUE (name))"""
 
 sql3 = """create table coursera.sub_href

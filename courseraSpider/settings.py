@@ -66,6 +66,8 @@ ROBOTSTXT_OBEY = False
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'courseraSpider.pipelines.CourseraspiderPipeline': 300,
+    'courseraSpider.pipelines.DetailSpiderPipeline': 200,
+    'courseraSpider.pipelines.SubMenuspiderPipeline': 200
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
