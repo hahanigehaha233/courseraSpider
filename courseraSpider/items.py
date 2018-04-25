@@ -9,8 +9,17 @@ import scrapy
 
 
 class CourseraspiderItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
     href = scrapy.Field()
     name = scrapy.Field()
-    pass
+    name_id = scrapy.Field()
+
+
+class DetailSpiderItem(scrapy.Item):
+    project_name = scrapy.Field()
+    feedback_num = scrapy.Field()
+    t_rank = scrapy.Field()
+
+
+class SubMenuItem(scrapy.Item):
+    parent_href = scrapy.Field()
+    sub_href = scrapy.Field()
