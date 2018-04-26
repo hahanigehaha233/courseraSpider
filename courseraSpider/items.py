@@ -18,8 +18,11 @@ class DetailSpiderItem(scrapy.Item):
     project_name = scrapy.Field()
     feedback_num = scrapy.Field()
     t_rank = scrapy.Field()
+    href = scrapy.Field()
 
 
 class SubMenuItem(scrapy.Item):
+    parent_name = scrapy.Field()
+    sub_name = scrapy.Field()
     parent_href = scrapy.Field()
     sub_href = scrapy.Field()

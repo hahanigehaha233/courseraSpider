@@ -18,10 +18,12 @@ class SubMenuspiderPipeline(object):
     def process_item(self, item, spider):
         try:
             self.cursor.execute(
-                """insert into sub_href(parent_href, child_href)
-                value (%s, %s)""",
+                """insert into sub_href(parent_href, child_href, parent_name, child_name)
+                value (%s, %s, %s, %s)""",
                 (item['parent_href'],
-                 item['sub_href']))
+                 item['sub_href'],
+                 item['parent_name'],
+                 item['sub_name']))
             self.connect.commit()
         except Exception as error:
             spider.log(error)
@@ -68,11 +70,12 @@ class DetailSpiderPipeline(object):
     def process_item(self, item, spider):
         try:
             self.cursor.execute(
-                """insert into project(project_name,feedback_num,t_rank,has_table)
-                value(%s, %s, %s,0)""",
+                """insert into project(project_name,feedback_num,t_rank,has_table, href)
+                value(%s, %s, %s, 0, %s)""",
                 (item['project_name'],
                  item['feedback_num'],
-                 item['t_rank']))
+                 item['t_rank'],
+                 item['href']))
             self.connect.commit()
         except Exception as error:
             spider.log(error)
