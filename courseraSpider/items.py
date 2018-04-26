@@ -26,3 +26,11 @@ class SubMenuItem(scrapy.Item):
     sub_name = scrapy.Field()
     parent_href = scrapy.Field()
     sub_href = scrapy.Field()
+
+
+class FeedbackSpiderItem(scrapy.Item):
+    table_name = scrapy.Field()
+    userid = scrapy.Field()
+    content = scrapy.Field()
+    timestamp = scrapy.Field()
+    rating = scrapy.Field()

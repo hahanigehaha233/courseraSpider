@@ -8,6 +8,54 @@ import config
 import pymysql
 
 
+class FeedbackSpiderPipeline(object):
+    def __init__(self):
+        self.connect = pymysql.connect(host=config.MYSQL_HOST, port=3306, db=config.MYSQL_DBNAME,
+                                       user=config.MYSQL_USER, passwd=config.MYSQL_PASSWD, charset='utf8',
+                                       use_unicode=True)
+        self.cursor = self.connect.cursor()
+
+    @classmethod
+    def get_project_url(cls):
+        project_href = CourseraspiderPipeline()
+        project_href.cursor.execute("""select href from project""")
+        result = project_href.cursor.fetchall()
+        project_href.connect.commit()
+        project_href.connect.close()
+        return result
+
+    @classmethod
+    def find_name_from_id(cls,name_id):
+        name = CourseraspiderPipeline()
+        name.cursor.execute("""select href from id where name_id = %s""", name_id)
+        result = name.cursor.fetchall()
+        name.connect.commit()
+        name.connect.close()
+        return result
+
+    @classmethod
+    def init_start_urls(cls, dict):
+        project_key = CourseraspiderPipeline()
+        project_key.cursor.execute("""select name_id from id where href = (%s)""", dict)
+        result = project_key.cursor.fetchall()
+        project_key.connect.commit()
+        project_key.connect.close()
+        return result
+
+    def process_item(self, item, spider):
+        try:
+            print(item['table_name'])
+            sql = "create table if not exists {0} like model".format(item['table_name'])
+            print sql
+            self.cursor.execute(sql)
+            sql = "insert into {0}(content, userid, timestamp, rating) value('{1}',{2},{3},{4})".format(item['table_name'], item['content'], item['userid'], item['timestamp'], item['rating'])
+            print  sql
+            self.cursor.execute(sql)
+            self.connect.commit()
+        except Exception as error:
+            spider.log(error)
+        return item
+
 class SubMenuspiderPipeline(object):
     def __init__(self):
         self.connect = pymysql.connect(host=config.MYSQL_HOST, port=3306, db=config.MYSQL_DBNAME,
@@ -70,8 +118,8 @@ class DetailSpiderPipeline(object):
     def process_item(self, item, spider):
         try:
             self.cursor.execute(
-                """insert into project(project_name,feedback_num,t_rank,has_table, href)
-                value(%s, %s, %s, 0, %s)""",
+                """insert into project(project_name,feedback_num,t_rank, href)
+                value(%s, %s, %s, %s)""",
                 (item['project_name'],
                  item['feedback_num'],
                  item['t_rank'],

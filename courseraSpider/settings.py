@@ -67,7 +67,8 @@ ROBOTSTXT_OBEY = False
 ITEM_PIPELINES = {
     'courseraSpider.pipelines.CourseraspiderPipeline': 300,
     'courseraSpider.pipelines.DetailSpiderPipeline': 200,
-    'courseraSpider.pipelines.SubMenuspiderPipeline': 200
+    'courseraSpider.pipelines.SubMenuspiderPipeline': 200,
+    'courseraSpider.pipelines.FeedbackSpiderPipeline': 200
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
