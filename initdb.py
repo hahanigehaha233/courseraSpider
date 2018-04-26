@@ -10,6 +10,7 @@ sql1 = """create table coursera.project
          FOREIGN KEY (project_name) REFERENCES id(name),
          feedback_num varchar(10),
          t_rank numeric(2,1),
+         href varchar(50),
          has_table tinyint(1))"""
 
 sql2 = """create table coursera.id
@@ -23,8 +24,10 @@ sql2 = """create table coursera.id
 sql3 = """create table coursera.sub_href
         (id int NOT NULL auto_increment,
         PRIMARY KEY (id),
-        parent_href varchar(500),
-        child_href varchar(500))"""
+        parent_name varchar(50),
+        child_href varchar(50),
+        parent_href varchar(50),
+        child_name varchar(50))"""
 
 cursor.execute(sql1)
 cursor.execute(sql2)
