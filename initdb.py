@@ -11,7 +11,7 @@ sql1 = """create table coursera.project
          feedback_num varchar(10),
          t_rank numeric(2,1),
          href varchar(50),
-         has_table tinyint(1))"""
+         table_name varchar(50))"""
 
 sql2 = """create table coursera.id
         (id int NOT NULL auto_increment,
