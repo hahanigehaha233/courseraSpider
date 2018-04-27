@@ -46,10 +46,8 @@ class FeedbackSpiderPipeline(object):
         try:
             print(item['table_name'])
             sql = "create table if not exists {0} like model".format(item['table_name'])
-            print sql
             self.cursor.execute(sql)
             sql = "insert into {0}(content, userid, timestamp, rating) value('{1}',{2},{3},{4})".format(item['table_name'], item['content'], item['userid'], item['timestamp'], item['rating'])
-            print  sql
             self.cursor.execute(sql)
             self.connect.commit()
         except Exception as error:
@@ -88,7 +86,7 @@ class CourseraspiderPipeline(object):
     def process_item(self, item, spider):
         try:
             self.cursor.execute(
-                """insert into id(name, href)
+                """insert into id(name, href, name_id)
                 value (%s, %s, %s)""",
                 (item['name'],
                  item['href'],
