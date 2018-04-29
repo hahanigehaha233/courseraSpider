@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+#coding:utf-8
 
 # Define your item pipelines here
 #
@@ -47,7 +48,8 @@ class FeedbackSpiderPipeline(object):
             print(item['table_name'])
             sql = "create table if not exists {0} like model".format(item['table_name'])
             self.cursor.execute(sql)
-            sql = "insert into {0}(content, userid, timestamp, rating) value('{1}',{2},{3},{4})".format(item['table_name'], item['content'], item['userid'], item['timestamp'], item['rating'])
+            sql = """insert into {0}(content, userid, timestamp, rating) value('{1}',{2},{3},{4})""".format(item['table_name'], item['content'].encode("utf8"), item['userid'], item['timestamp'], item['rating'])
+            print sql
             self.cursor.execute(sql)
             self.connect.commit()
         except Exception as error:

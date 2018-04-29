@@ -1,3 +1,5 @@
+#!/usr/bin/python
+#coding:utf-8
 import urlparse
 import urllib
 import scrapy
@@ -5,7 +7,6 @@ import json
 import re
 from courseraSpider.pipelines import FeedbackSpiderPipeline
 from courseraSpider.items import FeedbackSpiderItem
-#encoding=utf-8
 class feedbackSpider(scrapy.Spider):
     name = "getcoursefeedback"
     start_urls = []
@@ -21,6 +22,7 @@ class feedbackSpider(scrapy.Spider):
                 item = FeedbackSpiderItem()
                 tmp = data['comments']['generic']['definition']['value']
                 tmp = tmp.replace('<text>', '')
+                tmp = tmp.replace('<text/>', '')
                 tmp = tmp.replace('</text>', '')
                 tmp = tmp.replace('<co-content>', '')
                 tmp = tmp.replace('</co-content>', '')
