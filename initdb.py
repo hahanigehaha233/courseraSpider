@@ -33,6 +33,7 @@ model = """create table coursera.model
         PRIMARY KEY (id),
         content varchar(1000),
         userid varchar(50),
+        UNIQUE (userid),
         timestamp varchar(15),
         rating varchar(1))
 """
