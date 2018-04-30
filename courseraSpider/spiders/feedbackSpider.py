@@ -16,17 +16,19 @@ class feedbackSpider(scrapy.Spider):
     for i in dict:
         start_urls.append(str(url+FeedbackSpiderPipeline.init_start_urls(i[0])[0][0]+para))
 
+    def process_content(self, tmp):
+        tmp = tmp.replace('<text>', '')
+        tmp = tmp.replace('<text/>', '')
+        tmp = tmp.replace('</text>', '')
+        tmp = tmp.replace('<co-content>', '')
+        tmp = tmp.replace('</co-content>', '')
+        return tmp
+
     def parse(self, response):
             json_data = json.loads(response._body)
             for data in json_data['elements']:
                 item = FeedbackSpiderItem()
-                tmp = data['comments']['generic']['definition']['value']
-                tmp = tmp.replace('<text>', '')
-                tmp = tmp.replace('<text/>', '')
-                tmp = tmp.replace('</text>', '')
-                tmp = tmp.replace('<co-content>', '')
-                tmp = tmp.replace('</co-content>', '')
-                item['content'] = tmp
+                item['content'] = self.process_content(data['comments']['generic']['definition']['value'])
                 item['userid'] = re.search('^\d+', data['id']).group()
                 item['timestamp'] = data['timestamp']
                 item['rating'] = data['rating']['value']
