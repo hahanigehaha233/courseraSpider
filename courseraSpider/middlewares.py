@@ -8,6 +8,24 @@
 from scrapy import signals
 import random
 import time
+import os
+from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
+
+
+class MyUserAgentMiddleware(UserAgentMiddleware):
+
+    def __init__(self, user_agent):
+        self.user_agent = user_agent
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(
+            user_agent=crawler.settings.get('MY_USER_AGENT')
+        )
+
+    def process_request(self, request, spider):
+        agent = random.choice(self.user_agent)
+        request.headers['User-Agent'] = agent
 
 
 class ProxyMiddleWare(object):
@@ -31,9 +49,9 @@ class ProxyMiddleWare(object):
         return response
 
     def get_random_proxy(self):
-        '''随机从文件中读取proxy'''
         while 1:
-            with open('G:\\Scrapy_work\\myproxies\\myproxies\\proxies.txt', 'r') as f:
+            pwd = os.getcwd()
+            with open(pwd + '\proxies.txt', 'r') as f:
                 proxies = f.readlines()
             if proxies:
                 break
