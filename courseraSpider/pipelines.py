@@ -45,7 +45,6 @@ class FeedbackSpiderPipeline(object):
 
     def process_item(self, item, spider):
         try:
-            print(item['table_name'])
             sql = "create table if not exists {0} like model".format(item['table_name'])
             self.cursor.execute(sql)
             sql = """insert into {0}(content, userid, timestamp, rating) value('{1}',{2},{3},{4})""".format(item['table_name'], item['content'].encode("utf8"), item['userid'], item['timestamp'], item['rating'])
