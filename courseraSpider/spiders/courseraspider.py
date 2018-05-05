@@ -7,7 +7,7 @@ from courseraSpider.config import MAX_COURSE_PAGE
 
 class courseraSpider(scrapy.Spider):
     name = "getcourseid"
-    url = "https://www.coursera.org/courses?languages=en&start="
+    url = "https://www.coursera.org/courses?_facet_changed_=true&start="
     count = 1
     start_urls = [url + str(0)]
 
