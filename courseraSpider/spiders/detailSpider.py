@@ -16,8 +16,7 @@ class detailSpider(scrapy.Spider):
     def parse(self, response):
         if (re.search('/learn/', str(response))):
             item = DetailSpiderItem()
-            item['project_name'] = response.xpath(
-                '//*[@id="rendered-content"]/div/div/div/div/div[2]/div[1]/div[2]/div/div/div[2]/h1/text()').extract()[
+            item['project_name'] = response.xpath('//*[@id="rendered-content"]/div/div/div/div/div[1]/div[1]/div[2]/div/div/div[2]/h1/text()').extract()[
                 0]
             num = response.xpath('//*[@id="ratings"]/div[2]/button/span/span/text()').extract()[0]
             if(num):
@@ -28,9 +27,12 @@ class detailSpider(scrapy.Spider):
             item['href'] = str(response)[29:-1]
             yield item
         else:
-            parent_href = \
-                json.loads(response.xpath('//*[@id="c-ph-right-nav"]/ul/li[4]/a/@data-click-value').extract()[0])['href']['pathname']
-            parent_name = response.xpath('//*[@id="rendered-content"]/div/div/div[2]/div[2]/div/main/div/h1/span/text()').extract()[0]
+            parent_href = json.loads(response.xpath('//*[@id="c-ph-right-nav"]/ul/li[4]/a/@data-click-value').extract()[0])['href']['pathname']
+            parent_name_temp =response.xpath('//*[@id="rendered-content"]/div/div/div[1]/div[2]/div/main/div/h1/span/text()')
+            if(parent_name_temp):
+                parent_name = parent_name_temp
+            else:
+                parent_name = response.xpath('//*[@id="rendered-content"]/div/div/div[1]/div[2]/div/main/div/h1/text()').extract()[0]
             for (sel, name) in zip(response.xpath('//*[@class="link-to-cdp"]/span/a'), response.xpath('//*[@class="course-name headline-5-text"]/text()')):
                 item = SubMenuItem()
                 item['sub_href'] = sel.xpath('@href').extract()[0]
