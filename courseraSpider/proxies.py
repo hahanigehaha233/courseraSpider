@@ -52,9 +52,7 @@ class Proxies(object):
             page += 1
 
     def verify_proxies(self):
-        # 没验证的代理
         old_queue = Queue()
-        # 验证后的代理
         new_queue = Queue()
         print ('verify proxy........')
         works = []
