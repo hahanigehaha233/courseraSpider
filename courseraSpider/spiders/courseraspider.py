@@ -7,14 +7,16 @@ from courseraSpider.config import MAX_COURSE_PAGE
 
 class courseraSpider(scrapy.Spider):
     name = "getcourseid"
-    url = "https://www.coursera.org/courses?languages=en&start="
+    url = "https://www.coursera.org/courses?_facet_changed_=true&start="
     count = 1
     start_urls = [url + str(0)]
 
     def parse(self, response):
+        ''' loop in course list'''
         for (href, q) in zip(response.xpath('//*[@class="rc-OfferingCard nostyle"]'), \
                              response.xpath('//*[@class="color-primary-text headline-1-text flex-1"]/text()')):
             item = CourseraspiderItem()
+            '''select column in div'''
             item["href"] = href.xpath('@href').extract()
             item["name"] = q.extract()
             js = json.loads(href.xpath('@data-click-value').extract()[0])

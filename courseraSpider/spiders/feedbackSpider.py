@@ -22,6 +22,7 @@ class feedbackSpider(scrapy.Spider):
         tmp = tmp.replace('</text>', '')
         tmp = tmp.replace('<co-content>', '')
         tmp = tmp.replace('</co-content>', '')
+        tmp = tmp.replace("'", "''")
         return tmp
 
     def parse(self, response):
