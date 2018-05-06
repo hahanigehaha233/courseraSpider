@@ -62,10 +62,12 @@ LOG_ENABLE = True
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
 #    'courseraSpider.middlewares.CourseraspiderDownloaderMiddleware': 543,
-#    'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
-#    'courseraSpider.middlewares.ProxyMiddleWare': 100,
-    'scrapy.downloadermiddleware.useragent.UserAgentMiddleware': None,
-    'courseraSpider.middlewares.MyUserAgentMiddleware': 400,
+    'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware': 90,
+    'courseraSpider.middlewares.ProxyMiddleWare': 100,
+    'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
+    'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware': None,
+#    'scrapy.downloadermiddleware.useragent.UserAgentMiddleware': None,
+#    'courseraSpider.middlewares.MyUserAgentMiddleware': 400,
 }
 
 # Enable or disable extensions
