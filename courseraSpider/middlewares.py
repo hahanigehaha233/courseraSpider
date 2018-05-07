@@ -39,7 +39,6 @@ class ProxyMiddleWare(object):
 
     def process_response(self, request, response, spider):
         '''对返回的response处理'''
-        # 如果返回的response状态不是200，重新生成当前request对象
         if response.status != 200:
             proxy = self.get_random_proxy()
             print("this is response ip:" + proxy)
