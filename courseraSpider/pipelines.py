@@ -43,13 +43,29 @@ class FeedbackSpiderPipeline(object):
         project_key.connect.close()
         return result
 
+    def get_time_from_increment(self, table_name):
+        getTimeSql = """select timestamp from increment where name = {0}""".format(table_name)
+        self.cursor.execute(getTimeSql)
+        return self.cursor.fetchall()
+
+
     def process_item(self, item, spider):
         try:
-            sql = "create table if not exists {0} like model".format(item['table_name'])
-            self.cursor.execute(sql)
+            old_time = self.get_time_from_increment(item['table_name'])
+            if old_time:
+                if old_time[0][0] > item['timestamp'][:10]:
+                    return item
+            findsql = "create table if not exists {0} like model".format(item['table_name'])
+            self.cursor.execute(findsql)
             sql = """insert into {0}(content, userid, timestamp, rating) value('{1}',{2},{3},{4})""".format(item['table_name'], item['content'].encode("utf8"), item['userid'], item['timestamp'][:10], item['rating'])
             print sql
             self.cursor.execute(sql)
+            if old_time:
+                updateSql = """update table increment set timestamp = {0} where name = {1}""".format(item['timestamp'][:10], item['table_name'])
+                self.cursor.execute(updateSql)
+            else:
+                addSql = """insert into increment (timestamp, name) value({0}, {1})""".format(item['timestamp'][:10], item['table_name'])
+                self.cursor.execute(addSql)
             self.connect.commit()
         except Exception as error:
             spider.log(error)
