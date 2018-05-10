@@ -41,7 +41,7 @@ ROBOTSTXT_OBEY = False
 # Disable cookies (enabled by default)
 COOKIES_ENABLED = False
 
-LOG_FILE = 'feedback.log'
+LOG_FILE = 'log/test.log'
 LOG_ENABLE = True
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -62,10 +62,10 @@ LOG_ENABLE = True
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
 #    'courseraSpider.middlewares.CourseraspiderDownloaderMiddleware': 543,
-    'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware': 90,
-    'courseraSpider.middlewares.ProxyMiddleWare': 100,
-    'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
-    'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware': None,
+#    'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware': 90,
+#    'courseraSpider.middlewares.ProxyMiddleWare': 100,
+#    'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
+#    'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware': None,
 #    'scrapy.downloadermiddleware.useragent.UserAgentMiddleware': None,
 #    'courseraSpider.middlewares.MyUserAgentMiddleware': 400,
 }

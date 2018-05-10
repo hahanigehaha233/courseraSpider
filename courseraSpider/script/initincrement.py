@@ -1,6 +1,6 @@
 import pymysql
-import config
-conn = pymysql.connect(host=config.MYSQL_HOST, port=3306, user=config.MYSQL_USER, passwd=config.MYSQL_PASSWD, db=config.MYSQL_DBNAME, charset='utf8')
+import courseraSpider.config
+conn = pymysql.connect(host=courseraSpider.config.MYSQL_HOST, port=3306, user=courseraSpider.config.MYSQL_USER, passwd=courseraSpider.config.MYSQL_PASSWD, db=courseraSpider.config.MYSQL_DBNAME, charset='utf8')
 cursor = conn.cursor()
 
 sql = """show tables;"""
