@@ -7,10 +7,11 @@ from courseraSpider.config import MAX_COURSE_PAGE
 
 class courseraSpider(scrapy.Spider):
     name = "getcourseid"
+    count = 1
+    url = "https://www.coursera.org/courses?_facet_changed_=true&start="
 
     def start_requests(self):
-        url = "https://www.coursera.org/courses?_facet_changed_=true&start="
-        yield scrapy.Request(url+str(0))
+        yield scrapy.Request(self.url+str(0))
 
     def parse(self, response):
         ''' loop in course list'''
